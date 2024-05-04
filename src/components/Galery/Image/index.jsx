@@ -36,7 +36,13 @@ const Footer = styled.footer`
     align-items: center;
 `
 
-const Image = ({ foto, expandida = false }) => {
+const Image = ({ foto, expandida = false, aoZoomSolicitado, aoAlternarFavorito }) => {
+
+    let iconFavorite = '/icons/favorito.png';
+    if (foto.favorita) {
+        iconFavorite = '/icons/favorito-ativo.png'
+    }
+
     return (
         <Figure $expandida={expandida} id={`foto-${foto.id}`}>
             <img src={foto.path} alt={foto.alt} />
@@ -44,10 +50,10 @@ const Image = ({ foto, expandida = false }) => {
                 <h3>{foto.titulo}</h3>
                 <Footer>
                     <h4>{foto.fonte}</h4>
-                    <IconButton>
-                        <img src="/icons/favorito.png" alt="Icone de favorito" />
+                    <IconButton onClick={() => aoAlternarFavorito(foto)}>
+                        <img src={iconFavorite} alt="Icone de favorito" />
                     </IconButton>
-                    {!expandida && <IconButton aria-hidden={expandida}>
+                    {!expandida && <IconButton aria-hidden={expandida} onClick={() => aoZoomSolicitado(foto)}>
                         <img src="/icons/expandir.png" alt="Icone de expandir" />
                     </IconButton>}
                 </Footer>
